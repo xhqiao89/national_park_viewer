@@ -1,0 +1,41 @@
+{% extends "my_first_app/base.html" %}
+
+{% load tethys_gizmos %}
+
+{% load staticfiles %}
+
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'my_first_app/vendor/openlayers/v3.5.0-dist/ol.css' %}" type="text/css" />
+<style>
+    .ol-mouse-position {
+      top: 10px;
+      right: 40px;
+    }
+</style>
+{% endblock %}
+
+
+{% block app_navigation_items %}
+
+{% gizmo text_input damHeight %}
+
+{% gizmo button btnSearch %}
+
+{% endblock %}
+
+{% block app_content %}
+<div id="map"></div>
+
+{% endblock %}
+
+{% block app_actions %}
+  <a href="{% url 'my_first_app:home' %}" class="btn btn-default">Back</a>
+{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'my_first_app/js/map.js' %}"></script>
+  <script src="{% static 'my_first_app/vendor/openlayers/v3.5.0-dist/ol.js' %}"></script>
+{% endblock %}
+
