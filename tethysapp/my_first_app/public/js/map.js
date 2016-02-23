@@ -9,7 +9,7 @@ $(document).ready(function () {
 	target: 'map',
 	view: new ol.View({
 	    center: [-11000000, 4600000],
-		zoom: 5,
+		zoom: 3,
         projection: "EPSG:3857"
 	})
     });
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
 	var kml_layer = new ol.layer.Vector({
         source: new ol.source.Vector({
-          url: "/static/my_first_app/kml/NPpoints.kml",
+          url: "/static/my_first_app/kml/NP_Points.kml",
           format: new ol.format.KML()
         })
       });

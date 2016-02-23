@@ -14,12 +14,12 @@ def home(request):
 
 def map(request):
 
-    btnSearch = Button(display_text="Generate Storage Capacity Curve",
+    btnSearch = Button(display_text="Search Natioanl Park",
                         name="btnSearch",
                         attributes="",
                         submit=False)
 
-    damHeight = TextInput(display_text='Dam Height (m):',
+    damHeight = TextInput(display_text='Input Natioanl Park Name:',
                     name="damHeight",
                     initial="",
                     disabled=False,
