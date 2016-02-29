@@ -14,19 +14,38 @@ def home(request):
 
 def map(request):
 
-    btnSearch = Button(display_text="Search Natioanl Park",
+    btnSearch = Button(display_text="Zoom in",
                         name="btnSearch",
                         attributes="",
                         submit=False)
 
-    damHeight = TextInput(display_text='Input Natioanl Park Name:',
-                    name="damHeight",
-                    initial="",
-                    disabled=False,
-                    attributes="")
+    stateSelect = SelectInput(display_text="Select a state:",
+                                name='stateSelect',
+                                multiple=False,
+                                options=[('Alaska', 'AK'), ('American Samoa','AS'), ('Arizona', 'AZ'), ('Arkansas', 'AR'),
+                                         ('California', 'CA'), ('Colorado', 'CO'), ('Florida', 'FL'), ('Colorado', 'CO'),
+                                         ('Hawaii', 'HI'), ('Idaho', 'ID'), ('Kentucky', 'KY'), ('Maine', 'ME'), ('Michigan', 'MI'),
+                                         ('Hawaii', 'HI'),('Minnesota', 'MN'),('Montana', 'MT'), ('Nevada', 'NV'), ('New Mexico', 'NM'),
+                                         ('North Dakota', 'ND'), ('Ohio', 'OH'), ('Oregon', 'OR'), ('South Dakota', 'SD'), ('Tennessee', 'TN'),
+                                         ('Texas', 'TX'), ('Virgin Islands', 'VI'), ('Utah', 'UT'), ('Washington', 'WA'), ('Wyoming', 'WY') ],
+                                original='',
+                                attributes="id=select_state onchange=select_state();")
+
+    stateSelect = SelectInput(display_text="Select a state:",
+                                name='stateSelect',
+                                multiple=False,
+                                options=[('Alaska', 'AK'), ('American Samoa','AS'), ('Arizona', 'AZ'), ('Arkansas', 'AR'),
+                                         ('California', 'CA'), ('Colorado', 'CO'), ('Florida', 'FL'), ('Colorado', 'CO'),
+                                         ('Hawaii', 'HI'), ('Idaho', 'ID'), ('Kentucky', 'KY'), ('Maine', 'ME'), ('Michigan', 'MI'),
+                                         ('Hawaii', 'HI'),('Minnesota', 'MN'),('Montana', 'MT'), ('Nevada', 'NV'), ('New Mexico', 'NM'),
+                                         ('North Dakota', 'ND'), ('Ohio', 'OH'), ('Oregon', 'OR'), ('South Dakota', 'SD'), ('Tennessee', 'TN'),
+                                         ('Texas', 'TX'), ('Virgin Islands', 'VI'), ('Utah', 'UT'), ('Washington', 'WA'), ('Wyoming', 'WY') ],
+                                original='',
+                                attributes="id=select_state onchange=select_state();")
+
 
     context = {'btnSearch': btnSearch,
-               'damHeight': damHeight
+               'stateSelect': stateSelect
                }
 
     return render(request, 'my_first_app/map.html', context)
