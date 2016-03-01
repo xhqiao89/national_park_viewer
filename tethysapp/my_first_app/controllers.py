@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from tethys_apps.sdk.gizmos import Button, TextInput, SelectInput
+from tethys_apps.sdk.gizmos import Button, TextInput, SelectInput, RangeSlider
 from django.shortcuts import render
 
 
@@ -42,10 +42,18 @@ def map(request):
                                          ('Texas', 'TX'), ('Virgin Islands', 'VI'), ('Utah', 'UT'), ('Washington', 'WA'), ('Wyoming', 'WY') ],
                                 original='',
                                 attributes="id=select_state onchange=select_state();")
+    slider1 = RangeSlider(display_text='Slider 1',
+                      name='slider1',
+                      min=1872,
+                      max=2004,
+                      initial=1,
+                      step=1)
 
 
     context = {'btnSearch': btnSearch,
-               'stateSelect': stateSelect
+               'stateSelect': stateSelect,
+               'stateSelect': stateSelect,
+               'slider1': slider1
                }
 
     return render(request, 'my_first_app/map.html', context)
