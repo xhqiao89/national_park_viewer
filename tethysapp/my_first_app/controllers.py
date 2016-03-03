@@ -30,16 +30,8 @@ def map(request):
                                          ('Yosemite,California', 'Yosemite'), ('Zion,Utah', 'Zion')],
                                 original='',
                                 attributes="id=select_state onchange=select_park();")
-    slider1 = RangeSlider(display_text='Slider 1',
-                      name='slider1',
-                      min=1872,
-                      max=2004,
-                      initial=1,
-                      step=1)
 
-
-    context = {'select_park': select_park,
-               'slider1': slider1
+    context = {'select_park': select_park
                }
 
     return render(request, 'my_first_app/map.html', context)

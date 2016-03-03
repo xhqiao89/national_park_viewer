@@ -8,6 +8,8 @@
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'my_first_app/vendor/openlayers/v3.5.0-dist/ol.css' %}" type="text/css" />
 <link rel="stylesheet" href="{% static 'my_first_app/css/bootstrap.min.css' %}" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="{% static 'my_first_app/css/main.css' %}" type="text/css" />
 
 <style type="text/css">
     .ol-mouse-position {
@@ -62,13 +64,18 @@
 
 {% gizmo select_input select_park %}
 
-{% gizmo button btnSearch %}
-
 {% endblock %}
 
 {% block app_content %}
 
-{% gizmo range_slider slider1 %}
+<p>
+  <label for="amount">Established Year:</label>
+  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider"></div>
+
+<br>
 
 <div id="map">
     <div id="popup" class="ol-popup">
@@ -87,5 +94,8 @@
   {{ block.super }}
   <script src="{% static 'my_first_app/js/map.js' %}"></script>
   <script src="{% static 'my_first_app/vendor/openlayers/v3.5.0-dist/ol.js' %}"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="//dev.openlayers.org/OpenLayers.js"></script>
+
 {% endblock %}
 

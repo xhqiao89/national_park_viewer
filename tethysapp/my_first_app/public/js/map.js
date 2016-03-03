@@ -1,4 +1,4 @@
-var map, kml_layer;
+var map, vector_layer, kml_layer;
 
 $(document).ready(function () {
 
@@ -31,17 +31,48 @@ $(document).ready(function () {
         })
       });
 
+    vector_layer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#ffcc33',
+                width: 10
+            }),
+            image: new ol.style.Circle({
+                radius: 40,
+                fill: new ol.style.Fill({
+                    color: '#ffcc33'
+                })
+            })
+        })
+    });
+
     map = new ol.Map({
-        layers: [bing_layer, kml_layer],
+        layers: [bing_layer, vector_layer, kml_layer],
         overlays: [overlay],
         controls: ol.control.defaults(),
         target: 'map',
         view: new ol.View({
             center: [-11000000, 5500000],
-            zoom: 2.5,
+            zoom: 2.5
         })
     });
 
+    $( "#slider" ).slider({
+        min: 1872,
+        max: 2015,
+        step: 10,
+        change: function(event, ui) {
+            $( "#amount" ).val( ui.value );
+            vector_layer.getSource().clear();
+            showparks(ui.value);
+      }
+    });
+
+    $("#amount").val($("#slider").slider("value"));
 
     map.on('click', function(evt) {
 
@@ -62,7 +93,7 @@ $(document).ready(function () {
     }
 
         map.getView().setCenter(evt.coordinate);
-//        map.getView().setZoom(10);
+
     })
 
 });
@@ -70,7 +101,7 @@ $(document).ready(function () {
 function select_park(){
 
     var park_dropdown = document.getElementById("select_park").value;
-    myFeature = kml_layer.getSource().getFeatures();
+    var myFeature = kml_layer.getSource().getFeatures();
 
     var feature;
     for (i = 0; i < myFeature.length; i++) {
@@ -79,12 +110,28 @@ function select_park(){
             myCoords = feature.getGeometry().getCoordinates();
             map.getView().setCenter(myCoords);
             map.getView().setZoom(10);
-            var displaycontent = feature.get('description');
-            content.innerHTML = displaycontent;
-
-
+            map.getOverlays().item(0).setPosition(myCoords);
             }
         }
     }
+
+
+function showparks(val){
+
+    var year_selected = parseInt(val);
+
+    kml_layer.setVisible(false);
+
+    var myFeature = kml_layer.getSource().getFeatures();
+
+    for(i =0; i < myFeature.length; i++){
+         var ymd = myFeature[i].q.description.split("</td>")[6];
+         var year = ymd.split("/")[2];
+         var year1 = parseInt(year);
+             if (year1 < year_selected) {
+                 vector_layer.getSource().addFeature(myFeature[i]);
+         }
+    }
+}
 
 
