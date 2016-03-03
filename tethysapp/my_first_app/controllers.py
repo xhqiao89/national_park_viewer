@@ -1,9 +1,7 @@
-from django.contrib.auth.decorators import login_required
 from tethys_apps.sdk.gizmos import Button, TextInput, SelectInput, RangeSlider
 from django.shortcuts import render
 
 
-@login_required()
 def home(request):
     """
     Controller for the app home page.
@@ -14,34 +12,24 @@ def home(request):
 
 def map(request):
 
-    btnSearch = Button(display_text="Zoom in",
-                        name="btnSearch",
-                        attributes="",
-                        submit=False)
-
-    stateSelect = SelectInput(display_text="Select a state:",
-                                name='stateSelect',
+    select_park = SelectInput(display_text="Select a park:",
+                                name='select_park',
                                 multiple=False,
-                                options=[('Alaska', 'AK'), ('American Samoa','AS'), ('Arizona', 'AZ'), ('Arkansas', 'AR'),
-                                         ('California', 'CA'), ('Colorado', 'CO'), ('Florida', 'FL'), ('Colorado', 'CO'),
-                                         ('Hawaii', 'HI'), ('Idaho', 'ID'), ('Kentucky', 'KY'), ('Maine', 'ME'), ('Michigan', 'MI'),
-                                         ('Hawaii', 'HI'),('Minnesota', 'MN'),('Montana', 'MT'), ('Nevada', 'NV'), ('New Mexico', 'NM'),
-                                         ('North Dakota', 'ND'), ('Ohio', 'OH'), ('Oregon', 'OR'), ('South Dakota', 'SD'), ('Tennessee', 'TN'),
-                                         ('Texas', 'TX'), ('Virgin Islands', 'VI'), ('Utah', 'UT'), ('Washington', 'WA'), ('Wyoming', 'WY') ],
+                                options=[('Acadia,Maine', 'Acadia'), ('American Samoa,American Samoa','American Samoa'), ('Arches,Utah', 'Arches'), ('Badlands,South Dakota', 'Badlands'),
+                                         ('Big Bend,Texas', 'Big Bend'), ('Biscayne,Florida', 'Biscayne'), ('Black Canyon of the Gunnison,Colorado', 'Black Canyon of the Gunnison'), ('Bryce Canyon,Utah', 'Bryce Canyon'),
+                                         ('Canyonlands,Utah', 'Canyonlands'), ('Capitol Reef,Utah', 'Capitol Reef'), ('Carlsbad Caverns,New Mexico', 'Carlsbad Caverns'), ('Channel Islands,California', 'Channel Islands'), ('Congaree,South Carolina', 'Congaree'),
+                                         ('Crater Lake,Oregon', 'Crater Lake'),('Cuyahoga Valley,Ohio', 'Cuyahoga Valley'),('Death Valley,California', 'Death Valley'), ('Denali,Alaska', 'Denali'), ('Dry Tortugas,Florida', 'Dry Tortugas'),
+                                         ('Everglades,Florida', 'Everglades'), ('Gates of the Arctic,Alaska', 'Gates of the Arctic'), ('Glacier,Montana', 'Glacier'), ('Glacier Bay,Alaska', 'Glacier Bay'), ('Grand Canyon,Arizona', 'Grand Canyon'),
+                                         ('Grand Teton,Wyoming', 'Grand Teton'), ('Great Basin,Nevada', 'Great Basin'), ('Great Sand Dunes,Colorado', 'Great Sand Dunes'), ('Great Smoky Mountains,North Carolina', 'Great Smoky Mountains'), ('Guadalupe Mountains,Texas', 'Guadalupe Mountains'),
+                                         ('Haleakala,Hawaii', 'Haleakala'), ('Hawaii Volcanoes,Hawaii', 'Hawaii Volcanoes'), ('Hot Springs,Arkansas', 'Hot Springs'), ('Isle Royale,Michigan', 'Isle Royale'), ('Isle Royale,Michigan', 'Isle Royale'),
+                                         ('Joshua Tree,California', 'Joshua Tree'), ('Katmai,Alaska', 'Katmai'), ('Kenai Fjords,Alaska', 'Kenai Fjords'), ('Kings Canyon,California', 'Kings Canyon'), ('Kobuk Valley,Alaska', 'Kobuk Valley'),
+                                         ('Lake Clark,Alaska', 'Lake Clark'), ('Lassen Volcanic,California', 'Lassen Volcanic'), ('Mammoth Cave,Kentucky', 'Mammoth Cave'), ('Mesa Verde,Colorado', 'Mesa Verde'), ('Mount Rainier,Washington', 'Mount Rainier'),
+                                         ('North Cascades,Washington', 'North Cascades'), ('Olympic,Washington', 'Olympic'), ('Petrified Forest,Arizona', 'Petrified Forest'), ('Pinnacles,California', 'Pinnacles'), ('Redwood,California', 'Redwood'),
+                                         ('Rocky Mountain,Colorado', 'Rocky Mountain'), ('Saguaro,Arizona', 'Saguaro'), ('Sequoia,California', 'Sequoia'), ('Shenandoah,Virginia', 'Shenandoah'), ('Theodore Roosevelt,North Dakota', 'Theodore Roosevelt'),
+                                         ('Virgin Islands,Virgin Islands', 'Virgin Islands'), ('Voyageurs,Minnesota', 'Voyageurs'), ('Wind Cave,South Dakota', 'Wind Cave'), ('Wrangell-St. Elias,Alaska', 'Wrangell-St. Elias'), ('Yellowstone,Wyoming', 'Yellowstone'),
+                                         ('Yosemite,California', 'Yosemite'), ('Zion,Utah', 'Zion')],
                                 original='',
-                                attributes="id=select_state onchange=select_state();")
-
-    stateSelect = SelectInput(display_text="Select a state:",
-                                name='stateSelect',
-                                multiple=False,
-                                options=[('Alaska', 'AK'), ('American Samoa','AS'), ('Arizona', 'AZ'), ('Arkansas', 'AR'),
-                                         ('California', 'CA'), ('Colorado', 'CO'), ('Florida', 'FL'), ('Colorado', 'CO'),
-                                         ('Hawaii', 'HI'), ('Idaho', 'ID'), ('Kentucky', 'KY'), ('Maine', 'ME'), ('Michigan', 'MI'),
-                                         ('Hawaii', 'HI'),('Minnesota', 'MN'),('Montana', 'MT'), ('Nevada', 'NV'), ('New Mexico', 'NM'),
-                                         ('North Dakota', 'ND'), ('Ohio', 'OH'), ('Oregon', 'OR'), ('South Dakota', 'SD'), ('Tennessee', 'TN'),
-                                         ('Texas', 'TX'), ('Virgin Islands', 'VI'), ('Utah', 'UT'), ('Washington', 'WA'), ('Wyoming', 'WY') ],
-                                original='',
-                                attributes="id=select_state onchange=select_state();")
+                                attributes="id=select_state onchange=select_park();")
     slider1 = RangeSlider(display_text='Slider 1',
                       name='slider1',
                       min=1872,
@@ -50,9 +38,7 @@ def map(request):
                       step=1)
 
 
-    context = {'btnSearch': btnSearch,
-               'stateSelect': stateSelect,
-               'stateSelect': stateSelect,
+    context = {'select_park': select_park,
                'slider1': slider1
                }
 

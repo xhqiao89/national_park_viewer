@@ -24,15 +24,12 @@ $(document).ready(function () {
 		})
 	});
 
-	var kml_layer = new ol.layer.Vector({
+	kml_layer = new ol.layer.Vector({
         source: new ol.source.Vector({
           url: "/static/my_first_app/kml/NP_Points.kml",
           format: new ol.format.KML()
         })
       });
-
-    //map.addLayer(bing_layer);
-    //map.addLayer(kml_layer);
 
     map = new ol.Map({
         layers: [bing_layer, kml_layer],
@@ -59,19 +56,35 @@ $(document).ready(function () {
         var geometry = feature.getGeometry();
         var coord = geometry.getCoordinates();
         overlay.setPosition(coord);
+        var content = document.getElementById('popup-content');
         var displaycontent = feature.get('description');
         content.innerHTML = displaycontent;
     }
 
         map.getView().setCenter(evt.coordinate);
-        //map.getView().setZoom(5);
+//        map.getView().setZoom(10);
     })
 
 });
 
-function select_state(){
-    dropdown_obj=document.getElementById("select_state");
+function select_park(){
 
-}
+    var park_dropdown = document.getElementById("select_park").value;
+    myFeature = kml_layer.getSource().getFeatures();
+
+    var feature;
+    for (i = 0; i < myFeature.length; i++) {
+        feature = myFeature[i];
+        if (feature.q.name == park_dropdown) {
+            myCoords = feature.getGeometry().getCoordinates();
+            map.getView().setCenter(myCoords);
+            map.getView().setZoom(10);
+            var displaycontent = feature.get('description');
+            content.innerHTML = displaycontent;
+
+
+            }
+        }
+    }
 
 
