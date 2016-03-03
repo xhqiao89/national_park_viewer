@@ -128,7 +128,7 @@ function showparks(val){
          var ymd = myFeature[i].q.description.split("</td>")[6];
          var year = ymd.split("/")[2];
          var year1 = parseInt(year);
-             if (year1 < year_selected) {
+             if (year1 <= year_selected) {
                  vector_layer.getSource().addFeature(myFeature[i]);
          }
     }
