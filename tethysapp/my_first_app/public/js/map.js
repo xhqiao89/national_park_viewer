@@ -100,6 +100,8 @@ $(document).ready(function () {
 
 function select_park(){
 
+    kml_layer.setVisible(true);
+
     var park_dropdown = document.getElementById("select_park").value;
     var myFeature = kml_layer.getSource().getFeatures();
 
@@ -109,7 +111,7 @@ function select_park(){
         if (feature.q.name == park_dropdown) {
             myCoords = feature.getGeometry().getCoordinates();
             map.getView().setCenter(myCoords);
-            map.getView().setZoom(10);
+            map.getView().setZoom(9);
             map.getOverlays().item(0).setPosition(myCoords);
             }
         }
@@ -120,9 +122,9 @@ function showparks(val){
 
     var year_selected = parseInt(val);
 
-    kml_layer.setVisible(false);
-
     var myFeature = kml_layer.getSource().getFeatures();
+
+    kml_layer.setVisible(false);
 
     for(i =0; i < myFeature.length; i++){
          var ymd = myFeature[i].q.description.split("</td>")[6];

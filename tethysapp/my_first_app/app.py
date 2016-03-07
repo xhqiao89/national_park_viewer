@@ -7,10 +7,10 @@ class MyFirstApp(TethysAppBase):
 
     name = 'US National Parks Adventure'
     index = 'my_first_app:home'
-    icon = 'my_first_app/images/icon.gif'
+    icon = 'my_first_app/images/icon_f.png'
     package = 'my_first_app'
     root_url = 'my-first-app'
-    color = '#9b59b6'
+    color = '#38610B'
     description = 'Place a brief description of your app here.'
     enable_feedback = False
     feedback_emails = []
