@@ -64,8 +64,8 @@ $(document).ready(function () {
     $( "#slider" ).slider({
         min: 1872,
         max: 2015,
-        step: 10,
-        change: function(event, ui) {
+        step: 1,
+        slide: function(event, ui) {
             $( "#amount" ).val( ui.value );
             vector_layer.getSource().clear();
             showparks(ui.value);
@@ -112,7 +112,7 @@ function select_park(){
             myCoords = feature.getGeometry().getCoordinates();
             map.getView().setCenter(myCoords);
             map.getView().setZoom(9);
-            map.getOverlays().item(0).setPosition(myCoords);
+//            map.getOverlays().item(0).setPosition(myCoords);
             }
         }
     }
