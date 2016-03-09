@@ -2,19 +2,24 @@ var map, vector_layer, kml_layer;
 
 $(document).ready(function () {
 
+    // Elements that make up the popup
     var container = document.getElementById('popup');
     var content = document.getElementById('popup-content');
     var closer = document.getElementById('popup-closer');
 
+    //Add a click handler to hide the popup.
     closer.onclick = function() {
         overlay.setPosition(undefined);
         closer.blur();
         return false;
     };
+
+    //Create an overlay to anchor the popup to the map.
     var overlay = new ol.Overlay({
         element: container
     });
 
+    // create bing map layer
     var projection = ol.proj.get('EPSG:3857');
 
     bing_layer = new ol.layer.Tile({
@@ -24,6 +29,7 @@ $(document).ready(function () {
 		})
 	});
 
+    //dcreate kml_layer to show the kml file
 	kml_layer = new ol.layer.Vector({
         source: new ol.source.Vector({
           url: "/static/my_first_app/kml/NP_Points.kml",
@@ -31,23 +37,9 @@ $(document).ready(function () {
         })
       });
 
+    //create vector_layer to show parks established before specific year
     vector_layer = new ol.layer.Vector({
-        source: new ol.source.Vector(),
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: 'rgba(255, 255, 255, 0.2)'
-            }),
-            stroke: new ol.style.Stroke({
-                color: '#ffcc33',
-                width: 10
-            }),
-            image: new ol.style.Circle({
-                radius: 40,
-                fill: new ol.style.Fill({
-                    color: '#ffcc33'
-                })
-            })
-        })
+        source: new ol.source.Vector()
     });
 
     map = new ol.Map({
@@ -61,6 +53,7 @@ $(document).ready(function () {
         })
     });
 
+    //create a slider, when slide, run showparks()
     $( "#slider" ).slider({
         min: 1872,
         max: 2015,
@@ -74,23 +67,23 @@ $(document).ready(function () {
 
     $("#amount").val($("#slider").slider("value"));
 
+    //Add a click handler to the map to render the popup.
     map.on('click', function(evt) {
+        //Try to get a feature at the point of interest
+        var feature = map.forEachFeatureAtPixel(evt.pixel,
+            function(feature, layer) {
+            return feature;
+        });
 
-    //Try to get a feature at the point of interest
-    var feature = map.forEachFeatureAtPixel(evt.pixel,
-        function(feature, layer) {
-        return feature;
-    });
-
-    //if we found a feature then create and show the popup.
-    if (feature) {
-        var geometry = feature.getGeometry();
-        var coord = geometry.getCoordinates();
-        overlay.setPosition(coord);
-        var content = document.getElementById('popup-content');
-        var displaycontent = feature.get('description');
-        content.innerHTML = displaycontent;
-    }
+        //if we found a feature then create and show the popup.
+        if (feature) {
+            var geometry = feature.getGeometry();
+            var coord = geometry.getCoordinates();
+            overlay.setPosition(coord);
+            var content = document.getElementById('popup-content');
+            var displaycontent = feature.get('description');
+            content.innerHTML = displaycontent;
+        }
 
         map.getView().setCenter(evt.coordinate);
 
@@ -98,6 +91,7 @@ $(document).ready(function () {
 
 });
 
+//zoom to selected park
 function select_park(){
 
     kml_layer.setVisible(true);
@@ -112,12 +106,11 @@ function select_park(){
             myCoords = feature.getGeometry().getCoordinates();
             map.getView().setCenter(myCoords);
             map.getView().setZoom(9);
-//            map.getOverlays().item(0).setPosition(myCoords);
             }
         }
     }
 
-
+//slide event of the slider, add features of parks estabished before selected year to the vector_layer
 function showparks(val){
 
     var year_selected = parseInt(val);
